@@ -7,7 +7,7 @@ export const RegistrationStyle = styled.div`
   background: #fff;
 
   .box {
-    margin-top: 12%;
+    margin-top: 9%;
     border: 3px solid #d4d5d7;
     background: #eeebf1;
     padding: 50px 40px;

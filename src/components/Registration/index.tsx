@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Backend } from "../../Backend";
+import { RegistrationProps } from "../../Types";
 import { RegistrationStyle } from "./styles";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router";
 
 export const Registration: React.FC = () => {
   const [userValue, setUserValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+  const history = useHistory();
 
   const changeValue = (
     ev:
@@ -15,18 +19,21 @@ export const Registration: React.FC = () => {
   ) => {
     setValue(ev.target.value);
   };
-
   const buttonRegistration = () => {
-    Backend.post("/register", {
+    Backend.post<RegistrationProps>("/register", {
       user: userValue,
       email: emailValue,
       password: passwordValue,
     })
       .then((res) => {
-        console.log(res, "aqui esta");
+        setUserValue("");
+        setEmailValue("");
+        setPasswordValue("");
+        localStorage.setItem("token", res.data.token);
+        history.push("/");
       })
       .catch((err) => {
-        console.log(err, "erro");
+        toast.error("Erro: ", err);
       });
   };
 
@@ -53,6 +60,7 @@ export const Registration: React.FC = () => {
           <input
             className="informations"
             placeholder="Senha"
+            type="password"
             value={passwordValue}
             onChange={(ev) => changeValue(ev, setPasswordValue)}
           />
