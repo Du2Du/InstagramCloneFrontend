@@ -3,12 +3,13 @@ import { Backend } from "../../Backend";
 import { RegistrationProps } from "../../Types";
 import { RegistrationStyle } from "./styles";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router";
 
 export const Registration: React.FC = () => {
   const [userValue, setUserValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const [userToken, setUserToken] = useState("");
+  const history = useHistory();
 
   const changeValue = (
     ev:
@@ -28,14 +29,14 @@ export const Registration: React.FC = () => {
         setUserValue("");
         setEmailValue("");
         setPasswordValue("");
-        setUserToken(res.data.token);
+        localStorage.setItem("token", res.data.token);
+        history.push("/");
       })
       .catch((err) => {
         toast.error("Erro: ", err);
       });
   };
 
-  console.log(userToken, "token");
   return (
     <RegistrationStyle>
       <div className="box">
