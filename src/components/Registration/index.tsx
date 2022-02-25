@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Backend } from "../../Backend";
+import { showError } from "../../Helpers";
 import { RegistrationStyle } from "./styles";
 
 export const Registration: React.FC = () => {
@@ -25,9 +26,7 @@ export const Registration: React.FC = () => {
       .then((res) => {
         console.log(res, "aqui esta");
       })
-      .catch((err) => {
-        console.log(err, "erro");
-      });
+      .catch(showError);
   };
 
   return (
